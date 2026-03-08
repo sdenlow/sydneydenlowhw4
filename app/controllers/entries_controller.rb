@@ -1,15 +1,16 @@
 class EntriesController < ApplicationController
+  before_action :require_user
 
   def new
   end
 
   def create
     @entry = Entry.new
-    Rails.logger.info(params)
     @entry["title"] = params["title"]
     @entry["description"] = params["description"]
     @entry["occurred_on"] = params["occurred_on"]
     @entry["place_id"] = params["place_id"]
+    @entry["user_id"] = @current_user["id"]  # Associate entry with current user
     @entry.save
     redirect_to "/places/#{@entry["place_id"]}"
   end

@@ -1,4 +1,5 @@
 class PlacesController < ApplicationController
+  before_action :require_user, { except: [:index, :show] }
 
   def index
     @places = Place.all
@@ -6,24 +7,20 @@ class PlacesController < ApplicationController
 
   def show
     @place = Place.find_by({ "id" => params["id"] })
-    Rails.logger.info(params)
-    @entries = Entry.where({ "place_id" => @place["id"] })
- 
-
+    if @current_user
+      @entries = Entry.where({ "place_id" => @place["id"], "user_id" => @current_user["id"] })
+    else
+      @entries = []
+    end
   end
 
   def new
   end
 
   def create
-    @user = User.find_by({ "id" => session["user_id"] })
-    if @user != nil
-      @place = Place.new
-      @place["name"] = params["name"]
-      @place.save
-    else
-      flash["notice"] = "Login first."
-    end
+    @place = Place.new
+    @place["name"] = params["name"]
+    @place.save
     redirect_to "/places"
   end
 
