@@ -5,6 +5,7 @@ class EntriesController < ApplicationController
 
   def create
     @entry = Entry.new
+    Rails.logger.info(params)
     @entry["title"] = params["title"]
     @entry["description"] = params["description"]
     @entry["occurred_on"] = params["occurred_on"]
