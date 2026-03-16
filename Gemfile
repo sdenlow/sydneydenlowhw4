@@ -11,8 +11,8 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "cgi"
 
 group :development, :test do
+  gem "sqlite3", "~> 2.1"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-    gem "sqlite3", "~> 1.4"
 end
 
 group :development do
