@@ -22,4 +22,8 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  database: sydneydenlowhw4_production
+  username: sydneydenlowhw4
+  password: <%= ENV["SYDNEYDENLOW4_DATABASE_PASSWORD"] %>
+
